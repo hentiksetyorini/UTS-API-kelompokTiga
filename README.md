@@ -70,13 +70,13 @@ Buat file `.env` di folder utama proyek.
 
 Contoh konfigurasi:
 
-```env
-PORT=3000
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=db_uts
-DB_USER=postgres
-DB_PASSWORD=ISI_PASSWORD_POSTGRES_KAMU
+```env.example
+PORT=[port running di server node.js]
+DB_HOST=localhost [karena project running di local]
+DB_PORT=[port db postgres]
+DB_NAME=[nama database]
+DB_USER=[user database]
+DB_PASSWORD=[password db postgres]
 ```
 
 Sesuaikan konfigurasi dengan PostgreSQL yang digunakan.
