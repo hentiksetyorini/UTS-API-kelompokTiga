@@ -1,0 +1,993 @@
+{
+  "info": {
+    "_postman_id": "06631883-6f64-4cb5-8122-197b58916461",
+    "name": "UTS Pemograman API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59232759",
+    "_collection_link": "https://go.postman.co/collection/59232759-06631883-6f64-4cb5-8122-197b58916461?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "01-Alur",
+      "item": [
+        {
+          "name": "S02-Tambah Produkl Copy",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"kategori_id\": 1,\r\n    \"kode_produk\": \"PRD-UTS-002\",\r\n    \"nama_produk\": \"Rak Serbaguna\",\r\n    \"harga\": 125000,\r\n    \"stok\": 15\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/produk",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "S03 - Detail Produk Copy",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status harus 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Detail produk berhasil ditampilkan\", function () {\r\n    const response = pm.response.json();\r\n\r\n    pm.expect(response.status).to.eql(\"success\");\r\n    pm.expect(response.data.nama_produk).to.eql(\"Rak Serbaguna\");\r\n\r\n    pm.environment.set(\"produkId\", response.data.id);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/produk/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "S05 - Update Produk PUT Copy",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "\r\npm.test(\"Status harus 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Produk berhasil diperbarui\", function () {\r\n    const response = pm.response.json();\r\n\r\n    pm.expect(response.status).to.eql(\"success\");\r\n    pm.expect(response.data.nama_produk).to.eql(\"Rak Serbaguna Besar\");\r\n    pm.expect(response.data.harga).to.eql(150000);\r\n    pm.expect(response.data.stok).to.eql(20);\r\n});\r\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n{\r\n    \"kategori_id\": 1,\r\n    \"kode_produk\": \"PRD-UTS-006\",\r\n    \"nama_produk\": \"Rak Serbaguna Besar\",\r\n    \"harga\": 150000,\r\n    \"stok\": 20\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/produk/{{produkId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk",
+                "{{produkId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "S04 - Produk Berdasarkan Kategori",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/kategori/1/produk",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "kategori",
+                "1",
+                "produk"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "S06 - Update Stok PATCH Copy",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "\r\npm.test(\"Status harus 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Stok berhasil diperbarui\", function () {\r\n    const response = pm.response.json();\r\n\r\n    pm.expect(response.status).to.eql(\"success\");\r\n    pm.expect(response.data.stok).to.eql(30);\r\n});\r\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n{\r\n    \"stok\": 30\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/produk/{{produkId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk",
+                "{{produkId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "S07 - Soft Delete Produk",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "\r\npm.test(\"Status harus 204 No Content\", function () {\r\n    pm.response.to.have.status(204);\r\n});\r\n\r\npm.test(\"Produk berhasil dihapus sementara\", function () {\r\n    pm.expect(pm.response.text()).to.eql(\"\");\r\n});\r\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/produk/{{produkId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk",
+                "{{produkId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "S08 - Cek Produk Terhapus",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "\r\npm.test(\"Status harus 404 Not Found\", function () {\r\n    pm.response.to.have.status(404);\r\n});\r\n\r\npm.test(\"Produk yang dihapus tidak ditemukan\", function () {\r\n    const response = pm.response.json();\r\n\r\n    pm.expect(response.status).to.eql(\"error\");\r\n});\r\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/produk/{{produkId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk",
+                "{{produkId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "S09 - Cek Daftar Produk Aktif",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "\r\npm.test(\"Status harus 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Produk yang dihapus tidak muncul\", function () {\r\n    const response = pm.response.json();\r\n\r\n    pm.expect(response.status).to.eql(\"success\");\r\n\r\n    const produkDitemukan = response.data.some(function (produk) {\r\n        return produk.id === Number(pm.environment.get(\"produkId\"));\r\n    });\r\n\r\n    pm.expect(produkDitemukan).to.eql(false);\r\n});\r\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/produk",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "S10 - Restore Produk",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "\r\npm.test(\"Status harus 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Produk berhasil dipulihkan\", function () {\r\n    const response = pm.response.json();\r\n\r\n    pm.expect(response.status).to.eql(\"success\");\r\n    pm.expect(response.data.id).to.eql(Number(pm.environment.get(\"produkId\")));\r\n});\r\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/produk/{{produkId}}/restore",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk",
+                "{{produkId}}",
+                "restore"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "S11 - Cek Produk Setelah Restore",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "\r\npm.test(\"Status harus 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Produk berhasil ditampilkan kembali\", function () {\r\n    const response = pm.response.json();\r\n\r\n    pm.expect(response.status).to.eql(\"success\");\r\n    pm.expect(response.data.id).to.eql(\r\n        Number(pm.environment.get(\"produkId\"))\r\n    );\r\n    pm.expect(response.data.deleted_at).to.be.oneOf([null, undefined]);\r\n});\r\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/produk/{{produkId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk",
+                "{{produkId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "S12 - Hapus Kategori yang Digunakan",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "\r\npm.test(\"Status harus 409 Conflict\", function () {\r\n    pm.response.to.have.status(409);\r\n});\r\n\r\npm.test(\"Kategori tidak bisa dihapus karena masih digunakan\", function () {\r\n    const response = pm.response.json();\r\n\r\n    pm.expect(response.status).to.eql(\"error\");\r\n});\r\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/kategori/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "kategori",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "S13 — Tambah kategori sementara",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nama_kategori\": \"Kategori Uji Hapus 2026\",\r\n    \"deskripsi\": \"Kategori untuk pengujian delete permanen\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/kategori",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "kategori"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "S14 - Hapus Kategori Sementara",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/kategori/{{kategoriSementaraId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "kategori",
+                "{{kategoriSementaraId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "S15 - Cek Kategori Terhapus",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/kategori/{{kategoriSementaraId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "kategori",
+                "{{kategoriSementaraId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "S01 — Tambah Kategori",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/kategori",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "kategori"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2-Skenario Error",
+      "item": [
+        {
+          "name": "N01 - Kategori Nama Kosong",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nama_kategori\": \"\",\r\n    \"deskripsi\": \"Pengujian kategori kosong\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/kategori",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "kategori"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "N02 - Kategori Duplikat",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nama_kategori\": \"Kategori Uji Hapus 2026\",\r\n    \"deskripsi\": \"Pengujian nama kategori duplikat\"",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/kategori",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "kategori"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "N03 - Produk Data Tidak Valid",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"kategori_id\": 1,\r\n    \"kode_produk\": \"\",\r\n    \"nama_produk\": \"\",\r\n    \"harga\": -1000,\r\n    \"stok\": -5\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/produk",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "N03 - Validasi Data Produk",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"kategori_id\": 1,\r\n  \"kode_produk\": \"\",\r\n  \"nama_produk\": \"\",\r\n  \"harga\": -1000,\r\n  \"stok\": -5\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/produk",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "N04 - Kategori Tidak Ditemukan",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"kategori_id\": 99999,\r\n  \"kode_produk\": \"PRD-N04-001\",\r\n  \"nama_produk\": \"Produk Uji Kategori Tidak Ada\",\r\n  \"harga\": 50000,\r\n  \"stok\": 5\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/produk",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "N05 — Menguji kode produk duplikat.",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/produk",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "N06 - PUT Data Tidak Lengkap",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"kategori_id\": 1,\r\n  \"kode_produk\": \"PRD-N06-001\",\r\n  \"nama_produk\": \"Produk Uji PUT Tidak Lengkap\",\r\n  \"harga\": 50000\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/produk/{{produkId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk",
+                "{{produkId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "N05 - Kode Produk Duplikat",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"kategori_id\": 1,\r\n  \"kode_produk\": \"PRD-UTS-006\",\r\n  \"nama_produk\": \"Produk Uji Duplikat\",\r\n  \"harga\": 50000,\r\n  \"stok\": 5\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/produk",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "N08 - PATCH Kode Produk Duplikat",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"kode_produk\": \"PRD-UTS-002\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/produk/{{produkId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk",
+                "{{produkId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "N09 - ID Produk Tidak Valid",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/produk/abc",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk",
+                "abc"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "N08 — Menguji PATCH dengan Kode Produk Duplikat",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/produk",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "N07 — Menguji PATCH dengan Body Kosong",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/produk/{{produkId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk",
+                "{{produkId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "N10 - ID Produk Tidak Ditemukan",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/produk/99999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk",
+                "99999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "N11 - DELETE Produk Tidak Ditemukan",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/produk/99999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk",
+                "99999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "N12 - DELETE Pertama",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/produk/{{produkId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk",
+                "{{produkId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "N12 - DELETE Kedua",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/produk/{{produkId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk",
+                "{{produkId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "N13 - RESTORE Pertama",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/produk/{{produkId}}/restore",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk",
+                "{{produkId}}",
+                "restore"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "N13 - RESTORE Kedua",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/produk/{{produkId}}/restore",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk",
+                "{{produkId}}",
+                "restore"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "N14 - JSON Tidak Valid",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nama_kategori\": \"Tes JSON\",\r\n  \"deskripsi\": \"Pengujian format JSON\",",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/kategori",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "kategori"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3-Bukti Delete",
+      "item": [
+        {
+          "name": "B01 — Cek Produk Aktif",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/produk",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "B02 — Cek Produk Berdasarkan ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/produk/{{produkId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "produk",
+                "{{produkId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "B03 — Cek Kategori Sementara",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/kategori/{{kategoriSementaraId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "kategori",
+                "{{kategoriSementaraId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    }
+  ]
+}
